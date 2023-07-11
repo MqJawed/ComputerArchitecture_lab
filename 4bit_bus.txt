@@ -1,0 +1,36 @@
+DESIGN MODULE
+
+module test(
+  input [0:3]a,
+  input b,
+  output [0:3]c
+);
+  assign c[0:3] = b?a[0:3]:'bz;
+endmodule
+
+TESTBENCH
+
+module test_tb;
+  reg [0:3]a;
+  reg b;
+  wire [0:3]c;
+  test uut(.a(a),.b(b),.c(c));
+  initial begin
+    a = 4'b0100;
+    b = 0;
+    #100;
+    a = 4'b0101;
+    b = 1;
+    #100;
+    a = 4'b0110;
+    b = 0;
+    #100;
+    a = 4'b1000;
+    b = 1;
+    #100;
+  end
+  initial begin
+    $dumpfile("dump.vcd");
+    $dumpvars(0,test_tb);
+  end
+endmodule

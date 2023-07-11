@@ -1,0 +1,66 @@
+MODULE
+
+module prenc(
+  input I1,
+  input I2,
+  input I3,
+  input I4,  // MSB
+  output reg O1,
+  output reg O2  //MSB
+);
+  always@(I1 or I2 or I3 or I4)begin
+    if (I4 == 1)begin
+      assign O2 = 1;
+      assign O1 = 1;
+    end
+    else if (I3 == 1)begin
+      assign O2 = 1;
+      assign O1 = 0;
+    end
+    else if (I2 == 1)begin
+      assign O2 = 0;
+      assign O1 = 1;
+    end
+    else if (I1 == 1)begin
+      assign O2 = 0;
+      assign O1 = 0;
+    end
+  end
+endmodule
+
+TESTBENCH
+module prenc_tb;
+  reg I1;
+  reg I2;
+  reg I3;
+  reg I4;
+  reg O1;
+  reg O2;
+  prenc uut(.I1(I1),.I2(I2),.I3(I3),.I4(I4),.O1(O1),.O2(O2));
+  initial begin
+    I4 = 0;
+    I3 = 0;
+    I2 = 0;
+    I1 = 1;
+    #20;
+    I4 = 0;
+    I3 = 0;
+    I2 = 1;
+    I1 = 1;
+    #20;
+    I4 = 0;
+    I3 = 1;
+    I2 = 0;
+    I1 = 1;
+    #20;
+    I4 = 1;
+    I3 = 0;
+    I2 = 0;
+    I1 = 1;
+    #20;
+  end
+  initial begin
+    $dumpfile("dump.vcd");
+    $dumpvars(0,prenc_tb);
+  end
+endmodule

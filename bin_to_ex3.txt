@@ -1,0 +1,32 @@
+MODULE
+module mindec(
+
+  input [0:3]B,
+  output [0:3]BC
+    );
+  assign BC = B + 3;
+endmodule
+
+TESTBENCH
+
+module mindec_tb;
+  reg [0:3]B;
+  wire [0:3]BC;
+  mindec uut(.B(B),.BC(BC));
+  
+  initial begin
+       B = 4'b1001;
+    #100;
+         B = 4'b1010;
+    #100;
+         B = 4'b1011;
+    #100;
+     B = 4'b1100;
+    #100;
+         
+  end
+  initial begin
+    $dumpfile("dump.vcd");
+    $dumpvars(0,mindec_tb);
+  end
+endmodule

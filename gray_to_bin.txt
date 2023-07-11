@@ -1,0 +1,30 @@
+MODULE
+module mindec(
+
+  input [0:3]G,
+  output [0:3]B
+    );
+  assign B[0] = G[0];
+  assign B[1] = (B[0]^G[1]); // G in place of 2nd B
+  assign B[2] = (B[1]^G[2]);
+  assign B[3] = (B[2]^G[3]);
+endmodule
+
+TESTBENCH
+
+module mindec_tb;
+  reg [0:3]G;
+  wire [0:3]B;
+  mindec uut(.G(G),.B(B));
+  
+  initial begin
+    G = 4'b1111;
+    #100;
+     G = 4'b1110;
+    #100;
+  end
+  initial begin
+    $dumpfile("dump.vcd");
+    $dumpvars(0,mindec_tb);
+  end
+endmodule

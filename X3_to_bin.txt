@@ -1,0 +1,33 @@
+MODULE
+
+module mindec(
+
+  input [0:3]X3,
+  output [0:3]B
+    );
+  assign B = X3 - 3;
+endmodule
+
+TESTBENCH
+
+module mindec_tb;
+  reg [0:3]X3;
+  wire [0:3]B;
+  mindec uut(.X3(X3),.B(B));
+  
+  initial begin
+       X3 = 4'b1100;
+    #100;
+         X3 = 4'b1101;
+    #100;
+         X3 = 4'b1110;
+    #100;
+     X3 = 4'b1111;
+    #100;
+         
+  end
+  initial begin
+    $dumpfile("dump.vcd");
+    $dumpvars(0,mindec_tb);
+  end
+endmodule
